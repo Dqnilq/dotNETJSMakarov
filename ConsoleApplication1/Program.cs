@@ -1,38 +1,44 @@
 ﻿using System;
+using NUnit.Framework;
 
 namespace ConsoleApplication1
 {
 
-    public class Calc_Operations_Test 
+    public static class Tests
     {
-
         private static bool Test(int x, int y)
         {
-            if (x == y)
-            {
-                return true;
-            }
-            return false;
+            return x == y;
         }
 
-        private static void Sum_5Plus5_10Returned()
+        [Test]
+        public static void Sum_5Plus5_10Returned()
         {
-            Console.WriteLine("+" + " " + Test(10, Calculator.NewMethod(5, "+", 5)));
-        }
-        private static void Minus_5Munis5_0Returned()
-        {
-            Console.WriteLine( "-" + " " + Test(0,Calculator.NewMethod(5, "-", 5)));
+            Assert.AreEqual(10,Calculator.NewMethod(5, "+", 5));  //Unit Test!
+            Console.WriteLine("+" + " " + Test(10, Calculator.NewMethod(5, "+", 5)));  //Console Test! 
         }
         
-        private static void Multi_5Multi5_25Returned()
+        [Test]
+        public static void Minus_5Munis5_0Returned()
         {
-            Console.WriteLine( "*" + " " + Test(25,Calculator.NewMethod(5, "*", 5)));
+            Assert.AreEqual(0,Calculator.NewMethod(5, "-", 5));  //Unit Test!
+            Console.WriteLine( "-" + " " + Test(0,Calculator.NewMethod(5, "-", 5)));  //Console Test!
         }
-        private static void Div_5Div5_1Returned()
+        
+        [Test]
+        public static void Multi_5Multi5_25Returned()
         {
-            Console.WriteLine( "*" + " " + Test(25,Calculator.NewMethod(5, "*", 5)));
+            Assert.AreEqual(25,Calculator.NewMethod(5, "*", 5));  //Unit Test!
+            Console.WriteLine( "*" + " " + Test(25,Calculator.NewMethod(5, "*", 5)));  //Console Test! 
         }
-        internal static void TestOperation()
+        
+        [Test]
+        public static void Div_5Div5_1Returned()
+        {
+            Assert.AreEqual(1, Calculator.NewMethod(5, "/", 5));  //Unit Test!
+            Console.WriteLine( "/" + " " + Test(1,Calculator.NewMethod(5, "/", 5)));  //Console Test! 
+        }
+        internal static void TestOperation()  //Console Test's! 
         {
                Sum_5Plus5_10Returned();
                Minus_5Munis5_0Returned();
@@ -41,7 +47,7 @@ namespace ConsoleApplication1
         }
         
     }
- public class Calculator
+  public static class Calculator
     {
         public static int NewMethod(int a, string oper, int b)
         {
@@ -71,7 +77,7 @@ namespace ConsoleApplication1
                         var b = Calculator.GetNumber();
                         var res = Calculator.NewMethod(a, oper, b);
                         Console.WriteLine(res);
-                        Calc_Operations_Test.TestOperation();
+                        Tests.TestOperation();  //Console Test's! 
 
         }
     }
