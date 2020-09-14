@@ -12,10 +12,10 @@ namespace Calculator
         {
             return oper switch
             {
-                "+" => a + b,
-                "-" => a - b,
-                "*" => a * b,
-                "/" => a / b,
+            "+" => a + b,
+            "-" => a - b,
+            "*" => a * b,
+            "/" => a / b,
                 => throw new NotSupportedException()
             };
         }
@@ -35,28 +35,9 @@ namespace Calculator
             var res = Calculator.NewMethod(a, oper, b);
             Console.WriteLine(res);
 
-            switch (oper)
-            {
-                case "+":
-                    Console.WriteLine(a + b);
-                    break;
-                case "-":
-                    Console.WriteLine(a - b);
-                    break;
-                case "*":
-                    Console.WriteLine(a * b);
-                    break;
-                case "/":
-                    Console.WriteLine(a / b);
-                    break;
-            }
+          
         }
 
 
-
-
-
-
-        
     }
 }
