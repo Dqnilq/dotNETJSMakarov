@@ -36,6 +36,7 @@ namespace ConsoleApplication1
         public static void Div_5Div5_1Returned()
         {
             Assert.AreEqual(1, Calculator.NewMethod(5, "/", 5));  //Unit Test!
+            Assert.AreEqual(0, Calculator.NewMethod(5, "/", 0));  //Unit Test!
             Console.WriteLine( "/" + " " + Test(1,Calculator.NewMethod(5, "/", 5)));  //Console Test! 
         }
         internal static void TestOperation()  //Console Test's! 
