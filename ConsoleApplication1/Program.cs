@@ -38,13 +38,24 @@ namespace ConsoleApplication1
             Assert.AreEqual(1, Calculator.NewMethod(5, "/", 5));  //Unit Test!
             Console.WriteLine( "/" + " " + Test(1,Calculator.NewMethod(5, "/", 5)));  //Console Test! 
         }
+
         internal static void TestOperation()  //Console Test's! 
         {
-               Sum_5Plus5_10Returned();
-               Minus_5Munis5_0Returned();
-               Multi_5Multi5_25Returned();
-               Div_5Div5_1Returned();
+            try
+            {
+                Sum_5Plus5_10Returned();
+                Minus_5Munis5_0Returned();
+                Multi_5Multi5_25Returned();
+                Div_5Div5_1Returned();
+            }
+            catch 
+            {
+                throw  new Exception("Error!");
+            }
+               
         }
+
+        
         
     }
   public static class Calculator
@@ -57,27 +68,47 @@ namespace ConsoleApplication1
             "-" => a - b,
             "*" => a * b,
             "/" => a / b, 
-                
              _ =>    throw new NotSupportedException()
             };
         }
 
         public static int GetNumber()
         {
-            return int.Parse(Console.ReadLine()!);
+            var x = int.Parse(Console.ReadLine());
+            string str = x.ToString();
+            char _char = Convert.ToChar(str);
+            if (Char.IsDigit(_char) == false)
+            {
+                throw new NotSupportedException();
+            }
+
+            return x;
+
         }
     }
     internal static class Program
     {
-    
+        
         public static void Main(string[] args)
         {
-                        var a = Calculator.GetNumber();
-                        var oper = (Console.ReadLine());
-                        var b = Calculator.GetNumber();
-                        var res = Calculator.NewMethod(a, oper, b);
-                        Console.WriteLine(res);
-                        Tests.TestOperation();  //Console Test's! 
+                        try
+                        {
+                            var a = Calculator.GetNumber();
+                            var oper = (Console.ReadLine());
+                            var b = Calculator.GetNumber();
+                            var res = Calculator.NewMethod(a, oper, b);
+                            Console.WriteLine(res);
+                            Tests.TestOperation(); //Console Test's! 
+                        }
+                        catch
+                        {
+                            throw new Exception("Error! Reload!");
+                        }
+                        finally
+                        {
+                            Console.WriteLine("Exit..");
+                        }
+                       
 
         }
     }
