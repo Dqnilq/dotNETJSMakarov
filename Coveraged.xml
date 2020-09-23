@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root CoveredStatements="22" TotalStatements="22" CoveragePercent="100" ReportType="DetailedXml" DotCoverVersion="2020.2.2">
+  <FileIndices>
+    <File Index="1" Name="C:\Users\Danila\RiderProjects\ConsoleApplication1\ConsoleApplication1\Program.cs" ChecksumAlgorithm="SHA256" Checksum="FD97EDEC1A604E50C88022CAC1B91155449BB90B6807A9F1FA562F2B26B11CA5" />
+  </FileIndices>
+  <Assembly Name="ConsoleApplication1" CoveredStatements="22" TotalStatements="22" CoveragePercent="100">
+    <Namespace Name="ConsoleApplication1" CoveredStatements="22" TotalStatements="22" CoveragePercent="100">
+      <Type Name="Calculator" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+        <Method Name="NewMethod(System.Int32,System.String,System.Int32):System.Int32" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <Statement FileIndex="1" Line="62" Column="9" EndLine="62" EndColumn="10" Covered="True" />
+          <Statement FileIndex="1" Line="63" Column="13" EndLine="70" EndColumn="15" Covered="True" />
+          <Statement FileIndex="1" Line="71" Column="9" EndLine="71" EndColumn="10" Covered="True" />
+        </Method>
+      </Type>
+      <Type Name="Program" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+      <Type Name="Tests" CoveredStatements="19" TotalStatements="19" CoveragePercent="100">
+        <Method Name="Div_5Div5_1Returned():System.Void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <Statement FileIndex="1" Line="38" Column="9" EndLine="38" EndColumn="10" Covered="True" />
+          <Statement FileIndex="1" Line="39" Column="13" EndLine="39" EndColumn="65" Covered="True" />
+          <Statement FileIndex="1" Line="40" Column="13" EndLine="40" EndColumn="85" Covered="True" />
+          <Statement FileIndex="1" Line="41" Column="9" EndLine="41" EndColumn="10" Covered="True" />
+        </Method>
+        <Method Name="Minus_5Munis5_0Returned():System.Void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <Statement FileIndex="1" Line="24" Column="9" EndLine="24" EndColumn="10" Covered="True" />
+          <Statement FileIndex="1" Line="25" Column="13" EndLine="25" EndColumn="64" Covered="True" />
+          <Statement FileIndex="1" Line="26" Column="13" EndLine="26" EndColumn="85" Covered="True" />
+          <Statement FileIndex="1" Line="27" Column="9" EndLine="27" EndColumn="10" Covered="True" />
+        </Method>
+        <Method Name="Multi_5Multi5_25Returned():System.Void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <Statement FileIndex="1" Line="31" Column="9" EndLine="31" EndColumn="10" Covered="True" />
+          <Statement FileIndex="1" Line="32" Column="13" EndLine="32" EndColumn="65" Covered="True" />
+          <Statement FileIndex="1" Line="33" Column="13" EndLine="33" EndColumn="86" Covered="True" />
+          <Statement FileIndex="1" Line="34" Column="9" EndLine="34" EndColumn="10" Covered="True" />
+        </Method>
+        <Method Name="Sum_5Plus5_10Returned():System.Void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <Statement FileIndex="1" Line="17" Column="9" EndLine="17" EndColumn="10" Covered="True" />
+          <Statement FileIndex="1" Line="18" Column="13" EndLine="18" EndColumn="65" Covered="True" />
+          <Statement FileIndex="1" Line="19" Column="13" EndLine="19" EndColumn="86" Covered="True" />
+          <Statement FileIndex="1" Line="20" Column="9" EndLine="20" EndColumn="10" Covered="True" />
+        </Method>
+        <Method Name="Test(System.Int32,System.Int32):System.Boolean" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <Statement FileIndex="1" Line="11" Column="9" EndLine="11" EndColumn="10" Covered="True" />
+          <Statement FileIndex="1" Line="12" Column="13" EndLine="12" EndColumn="27" Covered="True" />
+          <Statement FileIndex="1" Line="13" Column="9" EndLine="13" EndColumn="10" Covered="True" />
+        </Method>
+      </Type>
+    </Namespace>
+  </Assembly>
+</Root>
