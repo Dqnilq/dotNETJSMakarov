@@ -60,7 +60,7 @@ namespace CLCLTR
                 Console.WriteLine(res);
                 Tests.TestOperation(); //Console Test's! 
             }
-            catch
+            catch    
             {
                 throw new Exception("Error! Reload!");
             }
