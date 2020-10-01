@@ -7,9 +7,11 @@
 
     <ItemGroup>
         <Compile Include="Program.fs" />
+        <Compile Include="f_tests.fs" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Calculator" Version="1.0.0.1" />
       <PackageReference Include="FsUnit" Version="4.0.1" />
     </ItemGroup>
 

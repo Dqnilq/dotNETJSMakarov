@@ -1,50 +1,68 @@
-﻿open System
+﻿namespace Calculator_f
+module Calculator =
+    open System
 
-type Maybe() =
+    let plus x y = Some(x + y)
+    let minus x y = Some(x - y)
+    let multiply x y = Some(x * y)
+    let divide x y =
+        if y = 0.0
+        then None
+        else Some(x / y)
+    
+    type MaybeBuilder() =
 
-    member this.Bind(x, f) = 
-        match x with
-        | None -> None
-        | Some a -> f a
+        member this.Bind(x, f) = 
+            match x with
+            | None -> None
+            | Some a -> f a
 
-    member this.Return(x) = 
-        Some x
+        member this.Return(x) = 
+            Some x
+   
+    let maybe = new MaybeBuilder()
+     
+    let wrapDouble (a:string) =
+        let isNumber, value = Double.TryParse(a)
+        if isNumber
+        then Some(value)
+        else None
         
-let maybe = new Maybe()
+    let possibleOperators = ["+"; "-"; "*"; "/"]
+        
+    let operatorParse (op:string) = List.exists (fun elem -> elem = op) possibleOperators, op
+             
+    let calculate x operator y =
+        maybe {
+            let! result =
+                match operator with
+                | "+" -> plus x y
+                | "-" -> minus x y
+                | "*" -> multiply x y
+                | "/" -> divide x y
+                | _ -> None
+            return result
+        }   
 
-let add x y = Some(x + y)
+module Program =
+    open System
+    open Calculator
 
-let subtract x y = Some(x - y)
-
-let multiply x y = Some(x * y)
-
-let divide x y = if y = 0.0 then None else Some(x / y)
-
-let parse (str:string) =
-    let isNumber, num = Double.TryParse str
-    if isNumber then Some(num) else None
-
-let calculate op a b =
-    maybe{
-        let! x = match op with
-            | "+" -> add a b
-            | "-" -> subtract a b
-            | "*" -> multiply a b
-            | "/" -> divide a b
-            | _ -> None
-        return x
-    }
-
-let write (t:float option) = if t=None then Console.WriteLine("Computational error. Probably you tried to divide by 0 or used invalid operator") else Console.WriteLine(t.Value)
-
-let calculateAndWrite op a b =
-    let t = calculate op a b
-    write t
-
-[<EntryPoint>]
-let main argv =
-    let a = parse (Console.ReadLine())
-    let op = Console.ReadLine()
-    let b = parse (Console.ReadLine())
-    if a = None || b = None then Console.WriteLine("One of parameters is not a number") else calculateAndWrite op a.Value b.Value
-    0
+    [<EntryPoint>]
+    let main argv =
+        let x = Console.ReadLine() 
+        let op = Console.ReadLine()
+        let y = Console.ReadLine()
+        
+        let isNumber1, val1 = Double.TryParse x
+        let isNumber2, val2 = Double.TryParse y
+        let isOperator, operator = operatorParse op
+        
+        if isNumber1 && isNumber2 && isOperator
+        then
+            let result = calculate val1 operator val2
+            if result.IsNone
+            then Console.WriteLine("You tried to divide by zero")
+            else Console.WriteLine(result)
+        else Console.WriteLine("WRONG INPUT: '{0}' or '{1}' is not a number or '{2}' is not a operator", x, y, op)
+        0
