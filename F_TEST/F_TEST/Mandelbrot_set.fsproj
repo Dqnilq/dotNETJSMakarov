@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="FSPowerPack.Core.Community" Version="3.0.0" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

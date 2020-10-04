@@ -1,27 +1,76 @@
-﻿open System                                // Множество Мандельброта - простейший код
-open System.Numerics
+﻿open System.Numerics
 open System.Windows.Forms
+open System.Windows.Forms
+open System.Windows.Forms
+open Microsoft.FSharp.Math;;
+open System
 open System.Drawing
-let rec nrpt f x = function           // рекурсивная функция для проверки сходимости
-   | 0 -> x                                   // последовательности комплексных чисел
-   | n -> nrpt f (f x) (n - 1)
-let mandelf c z = z * z + c          // собственно последовательность комплексных чисел
-let ismandel c = Complex.Abs (nrpt (mandelf c) Complex.Zero 30) < 2.0            // сходится?
-let colmandel = function true -> Color.BlueViolet | _ -> Color.Silver     // выбор цвета для отрисовки
-let scale (x,y) (u,v) n = float(n - u) / float(v - u) * (y - x) + x                            // масштабирование
-let form =
-   let image = new Bitmap(650, 650)                                                     // битовая карта для отрисовки
-   let lscale = scale (-1.5, 1.5) (3, image.Height+1)                                           // масштабируем
-   let rec filler = function                                                                                // и рисуем ...
-   | -1 , _ -> ()
-   | y , -1 -> filler (y - 1, (image.Width - 1))
-   | y , x  -> let t = Complex(lscale y, lscale x)
-               image.SetPixel ( y, x, t |> ismandel |> colmandel )                 // конвейер
-               filler (y, x - 1)
-   filler (image.Height - 1, image.Width - 1)
-   let temp = new Form(Width = 650, Height = 650)                               // сделаем окошко ...
-   temp.Paint.Add(fun e -> e.Graphics.DrawImage (image, 0, 0))           // битовую карту - в окошко
-   temp                                                                                               // всё вычислим ...
-do Application.Run(form) 
+open System.Windows.Forms
+open System.Threading
+
+module Mandelbrot =
+    let max = complex 1.0 1.0
+    let min = complex -1.0 -1.0
+    let rec IsInSet(z:complex, c:complex, current_iter, iter) =
+        if current_iter<iter && Complex.Abs(z)<=2.0 then
+            IsInSet(((z*z)+c), c, current_iter+1, iter)
+        else
+            current_iter
+            
+
+    
+    let convertMeasure(x:int, y:int, height_of_window:float, width_of_window:float, scale:float, mx:float,my:float) =
+        let toX p =
+            (p-(width_of_window/2.0))/(width_of_window/4.0*scale)
+        let toY p =
+            -(p-(height_of_window/2.0))/(height_of_window/4.0*scale)
+        (toX(float x) + mx, toY(float y) + my)
+    let colorize c =
+        let r = (4 * c) % 255
+        let g = (6 * c) % 255
+        let b = (8 * c) % 255
+        Color.FromArgb(r,g,b)
+    let PointToComplex(x,y) =
+        complex x y
+    let createImage(height, width, accuracy, scale,mx,my) =
+        let img = new Bitmap(400,400)
+        for x = 0 to width-1 do
+            for y = 0 to height-1 do
+                let iteration_passed = IsInSet(Complex.zero,PointToComplex(convertMeasure(x,y,float(height), float(width),scale,mx,my)), 0, accuracy)
+                if iteration_passed = accuracy then
+                    img.SetPixel(x,y,Color.Black)
+                else
+                    img.SetPixel(x,y,colorize iteration_passed)
+        img
 
 
+
+
+
+[<STAThread>]
+let mutable image = Mandelbrot.createImage(400,400,20,1.0,-0.7,0.28)
+let temp = new Form()
+temp.Size<-Size(400,400)
+let picBox = new PictureBox()
+picBox.Image <- image
+picBox.Size <- (Size(400,400))
+temp.Controls.Add(picBox)
+let scaled_pic = Mandelbrot.createImage(400,400,1000,100.0,-0.7,0.28)
+let mutable scale = 0.0
+let mutable speed = 1.0
+let mutable accuracy_scale = 1.0
+let timer = new System.Windows.Forms.Timer(Interval = 10)
+timer.Tick.Add <| fun _ ->
+    image <- Mandelbrot.createImage(400,400,20+int accuracy_scale,(1.0+scale),-0.7,0.28)
+    picBox.Image<-image
+    scale<-scale+speed
+    if int scale % 10 = 0 then speed<-speed*2.0
+    accuracy_scale<-accuracy_scale+3.0
+    if scale >= 100.0 then
+        timer.Stop()
+        image <- scaled_pic
+        picBox.Image<-image
+
+
+timer.Start()
+do Application.Run(temp)

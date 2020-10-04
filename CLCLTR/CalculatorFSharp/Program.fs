@@ -69,10 +69,9 @@ module Input_NumAndOp =            // Меодуль Ввода данных
 module Check_NumAndOp =       // Модуль проверки чисел на корректность ввода
     
     open Input_NumAndOp
-    
     let num1 = getNumber()
     let operation = getOperation()
-    let num2 = getNumber()
+    let num2 = getNumber()  
     
     if (num1.IsNone) then Console.WriteLine("Error: Проверьте первое число")
     if (operation.IsNone) then Console.WriteLine("Error: Неверный оператор")
@@ -88,9 +87,8 @@ module Program =
     
     [<EntryPoint>]
     let main argv =
-        
+     
     if not bl then    
         let result = calculate num1.Value operation.Value num2.Value
         checkAndWrite result
-        
     0
