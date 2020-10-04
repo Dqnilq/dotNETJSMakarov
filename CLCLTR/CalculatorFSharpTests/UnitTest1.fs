@@ -7,7 +7,7 @@ module CalculatorFTests =
 
     [<TestFixture>]
     
-    module UnitTests = 
+    module UnitTests =     // Тесты
 
         let calculateTests =
             [
@@ -18,6 +18,9 @@ module CalculatorFTests =
                 TestCaseData(5, "/", 2, ExpectedResult = Some(2.5), TestName = "Five divided two is two and half")
                 TestCaseData(1, "/", 0, ExpectedResult = None, TestName = "Division by zero is None")
                 TestCaseData(1, "#", 1, ExpectedResult = None, TestName = "Using wrong operator is None")
+                TestCaseData(1, "!", 2, ExpectedResult = None, TestName = "Using wrong operator is None")
+                TestCaseData(1, "%", 2, ExpectedResult = None, TestName = "Using wrong operator is None")
+                TestCaseData(1, "$", 2, ExpectedResult = None, TestName = "Using wrong operator is None")
             ]
         
         [<TestCaseSource("calculateTests")>]

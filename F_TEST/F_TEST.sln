@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "F_TEST", "F_TEST\F_TEST.fsproj", "{2267D4B3-C38D-4E8A-8911-7BE4ABD29C97}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Mandelbrot_set", "F_TEST\Mandelbrot_set.fsproj", "{D8D0A85C-C7EE-4582-8A13-771C6367B400}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2267D4B3-C38D-4E8A-8911-7BE4ABD29C97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2267D4B3-C38D-4E8A-8911-7BE4ABD29C97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2267D4B3-C38D-4E8A-8911-7BE4ABD29C97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2267D4B3-C38D-4E8A-8911-7BE4ABD29C97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8D0A85C-C7EE-4582-8A13-771C6367B400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8D0A85C-C7EE-4582-8A13-771C6367B400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8D0A85C-C7EE-4582-8A13-771C6367B400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8D0A85C-C7EE-4582-8A13-771C6367B400}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F38EFC6-7897-4AFB-B588-A6068303C885}
+	EndGlobalSection
+EndGlobal
