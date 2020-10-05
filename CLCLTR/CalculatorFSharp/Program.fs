@@ -64,11 +64,15 @@ module Input_NumAndOp =            // Меодуль Ввода данных
             Some(n)
         else
             None
+        
+module Program =
     
-     
-module Check_NumAndOp =       // Модуль проверки чисел на корректность ввода
-    
+    open Calculator
     open Input_NumAndOp
+    
+    [<EntryPoint>]
+    let main argv =
+        
     let num1 = getNumber()
     let operation = getOperation()
     let num2 = getNumber()  
@@ -77,16 +81,6 @@ module Check_NumAndOp =       // Модуль проверки чисел на �
     if (operation.IsNone) then Console.WriteLine("Error: Неверный оператор")
     if (num2.IsNone) then Console.WriteLine("Error: Провертье второе число")
     let bl = not (num1.IsNone || num2.IsNone || operation.IsNone)
-    
-    
-module Program =
-    
-    open Calculator
-    open Check_NumAndOp
-    open Input_NumAndOp
-    
-    [<EntryPoint>]
-    let main argv =
      
     if not bl then    
         let result = calculate num1.Value operation.Value num2.Value
