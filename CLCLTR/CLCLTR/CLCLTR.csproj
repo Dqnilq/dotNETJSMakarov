@@ -8,6 +8,10 @@
 
     <ItemGroup>
       <PackageReference Include="Codecov" Version="1.12.3" />
+      <PackageReference Include="JetBrains.dotCover.CommandLineTools" Version="2020.2.4">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
       <PackageReference Include="NUnit" Version="3.12.0" />
     </ItemGroup>
