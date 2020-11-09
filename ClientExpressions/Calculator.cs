@@ -28,7 +28,7 @@ namespace ClientExpressions
             {
                 if (str[i] == '(')
                 {
-                    i = NextS(str, i);
+                    i = GoToNextScope(str, i);
                     if (i == -1)
                         return GetExpressionTree(str.Substring(1, str.Length - 2));
                 }
@@ -47,7 +47,7 @@ namespace ClientExpressions
             {
                 if (str[i] == ')')
                 {
-                    i = notNextS(str, i);
+                    i = GoToPreviousScope(str, i);
                     if (i == -1)
                         return GetExpressionTree(str.Substring(1, str.Length - 2));
                 }
@@ -63,7 +63,7 @@ namespace ClientExpressions
             return Expression.Constant(int.Parse(str), typeof(int));
         }
 
-        private static int NextS(string str, int i)
+        private static int GoToNextScope(string str, int i)
         {
             var openScopeIndex = i;
             var openCount = 1;
@@ -80,14 +80,21 @@ namespace ClientExpressions
             return i + 1;
         }
 
-        private static int notNextS(string str, int i)
+        private static int GoToPreviousScope(string str, int i)
         {
-            var openScopeIndex = i;
-            var openCount = 1;
-            var closeCount = 0;
-            
+            var closeScopeIndex = i;
+            var openCount = 0;
+            var closeCount = 1;
+            while (openCount < closeCount)
+            {
+                i--;
+                openCount += str[i] == '(' ? 1 : 0;
+                closeCount += str[i] == ')' ? 1 : 0;
+            }
 
-            return 0;
+            if (i == 0 && closeScopeIndex == str.Length - 1) 
+                return -1;
+            return i - 1;
         }
 
         private static Expression GetExpression(Expression left, char operation, Expression right)
@@ -112,7 +119,7 @@ namespace ClientExpressions
 
         private static async Task<ExpressionResult> ProcessInParallelAsync(Expression expression)
         {
-           
+            var space = "---";
             var visitor = new CalculatorExpressionVisitor();
             var lazy = new Dictionary<ExpressionResult, Lazy<Task>>();
             var executeBefore = visitor.GetExecuteBefore(expression);
@@ -125,7 +132,7 @@ namespace ClientExpressions
                         Console.WriteLine(exp.Expression);
                     
                     if (exp.Expression is BinaryExpression)
-                        Console.WriteLine(string.Concat(Enumerable.Range(0, exp.Ranking).Select(i => ' ')) + GetOperation(exp.Expression));
+                        Console.WriteLine(string.Concat(Enumerable.Range(0, exp.Ranking).Select(i => space)) + GetOperation(exp.Expression));
                     
                     await Task.WhenAll(exps.Select(e => lazy[e].Value));
                     await Task.Yield();
@@ -133,24 +140,17 @@ namespace ClientExpressions
                     if (exp.Expression is BinaryExpression)
                     {
                         var client = new HttpClient();
-                        var response = await client.GetAsync(("http://localhost:5000/calculate?" + $"val1={exps[0].Result}&" + $"operation={GetOperation(exp.Expression)}&" + $"val2={exps[1].Result}").Replace("+", "%2B"));
+                        var response = await client.GetAsync(("http://localhost:5000/calculate?" +
+                                                             $"val1={exps[0].Result}&" +
+                                                             $"operation={GetOperation(exp.Expression)}&" +
+                                                             $"val2={exps[1].Result}")
+                                                             .Replace("+", "%2B"));
 
                         var result = response.Content.ReadAsStringAsync().Result;
-
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var client = new HttpClient();
-                            var response = await client.GetAsync(("http://localhost:5000/calculate?" + $"val1={exps[0].Result}&" + $"operation={GetOperation(exp.Expression)}&" + $"val2={exps[1].Result}").Replace("+", "%2B"));
-
-                            var result = response.Content.ReadAsStringAsync().Result;
-                        }
-                        catch
-                        {
-                            Console.WriteLine("0");
-                        }
+                        var isDouble = Double.TryParse(result, out exp.Result);
+                        
+                        if (!isDouble)
+                            throw new ArgumentException(result);
                     }
                 });
             }
