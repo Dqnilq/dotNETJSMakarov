@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ClientExpressions
+namespace ClientExpressions   // Реализациия Visitor 
 {
     public class CalculatorExpressionVisitor : ExpressionVisitor
     {
@@ -17,7 +17,7 @@ namespace ClientExpressions
             return executeBefore;
         }
         
-        protected override Expression VisitBinary(BinaryExpression binaryExpression)
+        protected override Expression VisitBinary(BinaryExpression binaryExpression)  // Переопределение Visitor под Expression
         {
             Visit(binaryExpression.Left);
             Visit(binaryExpression.Right);

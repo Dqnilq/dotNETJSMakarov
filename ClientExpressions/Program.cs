@@ -6,10 +6,10 @@ namespace ClientExpressions
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args) // Enter Point
         {
             //var query = Console.ReadLine();
-            Console.WriteLine(Calculator.CalculateAsync("(2+3)/12*7+8*9").Result);
+            Console.WriteLine(Calculator.CalculateAsync("(2+3)/12*7+8*9").Result); 
         }
     }
 }

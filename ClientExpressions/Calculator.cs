@@ -11,22 +11,22 @@ namespace ClientExpressions
 {
     public static class Calculator
     {
-        private static char[] lessPriorityOperators = {'+', '-'};
-        private static char[] morePriorityOperators = {'/', '*'};
+        private static char[] lessPriorityOperators = {'+', '-'};   // Вариации (1)
+        private static char[] morePriorityOperators = {'/', '*'};   // Вариации (2)
         
-        public static async Task<double> CalculateAsync(string query)
+        public static async Task<double> CalculateAsync(string query)       // "Отладка" в query через CalculateAsync
         {
-            var expressionTree = GetExpressionTree(query);
+            var expressionTree = GetExpressionTree(query);      
             var result = await ProcessInParallelAsync(expressionTree);
             return result.Result;
         }
         
-        public static Expression GetExpressionTree(string str)
+        public static Expression GetExpressionTree(string str)       // Реализация ExpressionTree (GET)
         {
             var i = 0;
             while (i < str.Length)
             {
-                if (str[i] == '(')
+                if (str[i] == '(')                // Переход к другому выражению
                 {
                     i = GoToNextScope(str, i);
                     if (i == -1)
@@ -63,7 +63,7 @@ namespace ClientExpressions
             return Expression.Constant(int.Parse(str), typeof(int));
         }
 
-        private static int GoToNextScope(string str, int i)
+        private static int GoToNextScope(string str, int i)          // Переход к Next 
         {
             var openScopeIndex = i;
             var openCount = 1;
@@ -80,7 +80,7 @@ namespace ClientExpressions
             return i + 1;
         }
 
-        private static int GoToPreviousScope(string str, int i)
+        private static int GoToPreviousScope(string str, int i)       // Переход к Previous
         {
             var closeScopeIndex = i;
             var openCount = 0;
@@ -97,7 +97,7 @@ namespace ClientExpressions
             return i - 1;
         }
 
-        private static Expression GetExpression(Expression left, char operation, Expression right)
+        private static Expression GetExpression(Expression left, char operation, Expression right)  // Получить выражение и разделить на Expression 
             => operation switch
             {
                 '+' => Expression.Add(left, right),
@@ -107,7 +107,7 @@ namespace ClientExpressions
                 _ => throw new ArgumentException()
             };
 
-        private static string GetOperation(Expression expression)
+        private static string GetOperation(Expression expression)  // Операции (Разделение)
             => expression.NodeType switch
             {
                 ExpressionType.Add => "+",
@@ -117,13 +117,13 @@ namespace ClientExpressions
                 _ => throw new ArgumentException()
             };
 
-        private static async Task<ExpressionResult> ProcessInParallelAsync(Expression expression)
+        private static async Task<ExpressionResult> ProcessInParallelAsync(Expression expression) // Реализация Expression с помощью Visitor
         {
             var space = "---";
-            var visitor = new CalculatorExpressionVisitor();
+            var visitor = new CalculatorExpressionVisitor();  
             var lazy = new Dictionary<ExpressionResult, Lazy<Task>>();
             var executeBefore = visitor.GetExecuteBefore(expression);
-            var res = executeBefore.Last().Key;
+            var res = executeBefore.Last().Key;  
             foreach (var (exp, exps) in executeBefore)
             {
                 lazy[exp] = new Lazy<Task>(async () =>
@@ -140,7 +140,7 @@ namespace ClientExpressions
                     if (exp.Expression is BinaryExpression)
                     {
                         var client = new HttpClient();
-                        var response = await client.GetAsync(("http://localhost:5000/calculate?" +
+                        var response = await client.GetAsync(("http://localhost:5000/calculate?" +        // Async передача на сервер полученных выражений
                                                              $"val1={exps[0].Result}&" +
                                                              $"operation={GetOperation(exp.Expression)}&" +
                                                              $"val2={exps[1].Result}")
@@ -156,7 +156,7 @@ namespace ClientExpressions
             }
 
             await Task.WhenAll(lazy.Values.Select(l => l.Value));
-            return res;
+            return res; 
         }
     }
 }

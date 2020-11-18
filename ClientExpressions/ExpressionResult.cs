@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace ClientExpressions
 {
-    public class ExpressionResult
+    public class ExpressionResult  // Вывод результата 
     {
         private static Dictionary<Expression, ExpressionResult> Instances 
             = new Dictionary<Expression, ExpressionResult>();
@@ -11,14 +11,14 @@ namespace ClientExpressions
         public double Result;
         public int Ranking { get; private set; }
 
-        private ExpressionResult(Expression expression)
+        private ExpressionResult(Expression expression)   // Check
         {
             Expression = expression;
             if (expression is ConstantExpression constantExpression)
                 Result = (int)constantExpression.Value;
         }
 
-        public static ExpressionResult GetExpressionResult(Expression expression, int previousRanking)
+        public static ExpressionResult GetExpressionResult(Expression expression, int previousRanking) // !Содержание (?)
         {
             if (Instances.ContainsKey(expression))
                 return Instances[expression];
@@ -29,7 +29,7 @@ namespace ClientExpressions
             return newExpressionResult;
         }
         
-        public static ExpressionResult GetExpressionResult(Expression expression)
+        public static ExpressionResult GetExpressionResult(Expression expression)  // !Содержание (?)
         {
             if (Instances.ContainsKey(expression))
                 return Instances[expression];
