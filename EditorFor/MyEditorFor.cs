@@ -11,18 +11,18 @@ namespace EditorFor
 {
     public static class MyEditorFor
     {
-        public static IHtmlContent MyEditorForModel(this IHtmlHelper helper, object model)
+        public static IHtmlContent MyEditorForModel(this IHtmlHelper helper, object model) // Реализация html-хелпера в виде Model
         {
-            var content = new HtmlContentBuilder();
+            var content = new HtmlContentBuilder();   
             foreach (var str in GetForm(model))
             {
-                content.AppendHtml(str);
+                content.AppendHtml(str);            // Применение параметров к полученной строке 
             }
 
-            return content;
+            return content;     
         }
         
-        public static IHtmlContent MyEditorForProperty(this IHtmlHelper helper, object obj)
+        public static IHtmlContent MyEditorForProperty(this IHtmlHelper helper, object obj)   // Реализация html-хелпера в виде Property
         {
             var content = new HtmlContentBuilder();
             foreach (var str in Process(new PropertyNode(obj)))
@@ -33,7 +33,7 @@ namespace EditorFor
             return content;
         }
         
-        private static readonly Dictionary<Type, string> InputTypes = new Dictionary<Type, string>
+        private static readonly Dictionary<Type, string> InputTypes = new Dictionary<Type, string>   // Словарь по входых значениям
         {
             {typeof(int), "number"},
             {typeof(long), "number"},
@@ -41,7 +41,7 @@ namespace EditorFor
             {typeof(string), "text"}
         };
 
-        public static IEnumerable<string> GetForm(object obj)
+        public static IEnumerable<string> GetForm(object obj)    //  Привязка "флагов" к полученной форме 
         {
             var root = new PropertyNode(obj);
             foreach (var str in root
@@ -51,7 +51,7 @@ namespace EditorFor
                 yield return str;
         }
         
-        private static IEnumerable<string> Process(PropertyNode node)
+        private static IEnumerable<string> Process(PropertyNode node)    // Основной вывод
         {
             yield return $"<div class='editor-label'><label for='{node.Name}'>{node.Name}</label></div>";
 
@@ -78,7 +78,7 @@ namespace EditorFor
             }
         }
 
-        private static string GetInput(PropertyNode node)
+        private static string GetInput(PropertyNode node)   // Вывод
         {
             return $"<div class='editor-field'>" +
                    $"<input " +
@@ -90,7 +90,7 @@ namespace EditorFor
                    $"</div>";
         }
 
-        private static string GetSelect(PropertyNode node)
+        private static string GetSelect(PropertyNode node)    // Вывод
         {
             return $"<div class='editor-field'>" +
                    $"<select name='{node.Name}'>" +

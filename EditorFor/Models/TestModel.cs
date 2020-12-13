@@ -1,6 +1,6 @@
 ﻿namespace EditorFor.Models
 {
-    public class TestModel
+    public class TestModel   // Описание полей TestModel
     {
         public int IntProperty { get; set; }
         public long LongProperty { get; set; }
@@ -10,7 +10,7 @@
         public NestedClass ClassProperty { get; set; }
     }
 
-    public enum Enum
+    public enum Enum   // "Перечисляемый тип"
     {
         Option1,
         Option2, 

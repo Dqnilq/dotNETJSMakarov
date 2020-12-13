@@ -19,7 +19,7 @@ namespace EditorFor.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index()    // Тестовый Action (Index), который реализует класс TestModel с заполнением полей 
         {
             var testModel = new TestModel
             {
@@ -28,7 +28,7 @@ namespace EditorFor.Controllers
                 BoolProperty = true,
                 StringProperty = "Строка",
                 EnumProperty = Enum.Option3,
-                ClassProperty = new NestedClass
+                ClassProperty = new NestedClass    // Реализация NestedClass с заполнением полей
                 {
                     NestedIntProperty = 9,
                     NestedStringProperty = "Ещё строка"
@@ -37,12 +37,12 @@ namespace EditorFor.Controllers
             return View(testModel);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy()          
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)] // Параметры кэширования по Http
         public IActionResult Error()
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
